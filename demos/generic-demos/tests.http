@@ -1,0 +1,15 @@
+
+#http://localhost:1880/ping
+
+
+#http://localhost:1880/apis
+
+
+#http://localhost:1880/agritec/v1/obtentores?dataAtualizacao=2018-01-01
+
+http://localhost:1880/categories/2
+
+#http://localhost:1880/categories
+
+
+#http://localhost:1880/csv

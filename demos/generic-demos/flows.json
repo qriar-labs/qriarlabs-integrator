@@ -1,0 +1,832 @@
+[
+    {
+        "id": "303c3e3222f23a18",
+        "type": "tab",
+        "label": "Postgres API Flow",
+        "disabled": false,
+        "info": "# API flows for query PostgreSQL\n\nCheck the APIs getting data from Database (PostgreSQL)",
+        "env": []
+    },
+    {
+        "id": "738ae533db3bed30",
+        "type": "tab",
+        "label": "Multiple Calls Proxy",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d6058c3017298c37",
+        "type": "postgreSQLConfig",
+        "name": "dbSpate",
+        "host": "localhost",
+        "hostFieldType": "str",
+        "port": "35432",
+        "portFieldType": "num",
+        "database": "postgres",
+        "databaseFieldType": "str",
+        "ssl": "false",
+        "sslFieldType": "bool",
+        "applicationName": "",
+        "applicationNameType": "str",
+        "max": "10",
+        "maxFieldType": "num",
+        "idle": "2000",
+        "idleFieldType": "num",
+        "connectionTimeout": "10000",
+        "connectionTimeoutFieldType": "num",
+        "user": "postgres",
+        "userFieldType": "str",
+        "password": "changeme",
+        "passwordFieldType": "str"
+    },
+    {
+        "id": "4afe4ff17a2fc409",
+        "type": "http in",
+        "z": "303c3e3222f23a18",
+        "name": "/health",
+        "url": "/health",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 190,
+        "y": 100,
+        "wires": [
+            [
+                "3efdbf5fef7e49b2"
+            ]
+        ]
+    },
+    {
+        "id": "3e71fe0ec7bde6b0",
+        "type": "http response",
+        "z": "303c3e3222f23a18",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1110,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "3efdbf5fef7e49b2",
+        "type": "function",
+        "z": "303c3e3222f23a18",
+        "name": "setPayload",
+        "func": "var payload = {\n    \"info\": \"ack\"\n}\nmsg.payload = payload;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 100,
+        "wires": [
+            [
+                "3e71fe0ec7bde6b0"
+            ]
+        ]
+    },
+    {
+        "id": "32e1642b557de4de",
+        "type": "postgresql",
+        "z": "303c3e3222f23a18",
+        "name": "queryCategories",
+        "query": "SELECT * from categories c",
+        "postgreSQLConfig": "d6058c3017298c37",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 540,
+        "y": 200,
+        "wires": [
+            [
+                "3e71fe0ec7bde6b0"
+            ]
+        ]
+    },
+    {
+        "id": "2a50a50de5411ad4",
+        "type": "http in",
+        "z": "303c3e3222f23a18",
+        "name": "GET:/categories",
+        "url": "/categories",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 170,
+        "y": 200,
+        "wires": [
+            [
+                "32e1642b557de4de"
+            ]
+        ]
+    },
+    {
+        "id": "b3c8842dd6446695",
+        "type": "http in",
+        "z": "303c3e3222f23a18",
+        "name": "GET:/categories/:id",
+        "url": "/categories/:id",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 190,
+        "y": 280,
+        "wires": [
+            [
+                "bdcf92c08c87b05c",
+                "178c01e19b120d5d"
+            ]
+        ],
+        "icon": "node-red/arrow-in.svg"
+    },
+    {
+        "id": "604f31f6d37f3384",
+        "type": "catch",
+        "z": "303c3e3222f23a18",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 150,
+        "y": 980,
+        "wires": [
+            [
+                "ad23aa6d39604f18"
+            ]
+        ]
+    },
+    {
+        "id": "1f157efd699d86d7",
+        "type": "http response",
+        "z": "303c3e3222f23a18",
+        "name": "",
+        "statusCode": "500",
+        "headers": {
+            "X-Nasph-Complete": "false",
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        },
+        "x": 570,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "ad23aa6d39604f18",
+        "type": "change",
+        "z": "303c3e3222f23a18",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"error\":\"Error processing the request\"}",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 980,
+        "wires": [
+            [
+                "1f157efd699d86d7"
+            ]
+        ]
+    },
+    {
+        "id": "d2fe54ec82e71e92",
+        "type": "comment",
+        "z": "303c3e3222f23a18",
+        "name": "Process Errors",
+        "info": "",
+        "x": 170,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "bdcf92c08c87b05c",
+        "type": "postgresql",
+        "z": "303c3e3222f23a18",
+        "name": "queryCategoriesByID",
+        "query": "select category_id , category_name , description from categories c where category_id = {{ msg.req.params.id }}",
+        "postgreSQLConfig": "d6058c3017298c37",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 570,
+        "y": 280,
+        "wires": [
+            [
+                "3e71fe0ec7bde6b0"
+            ]
+        ]
+    },
+    {
+        "id": "178c01e19b120d5d",
+        "type": "debug",
+        "z": "303c3e3222f23a18",
+        "name": "Debug Param",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "req.params",
+        "targetType": "msg",
+        "statusVal": "req.query",
+        "statusType": "auto",
+        "x": 530,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "55fefc9fab01990b",
+        "type": "http in",
+        "z": "303c3e3222f23a18",
+        "name": "POST: /categories",
+        "url": "/categories",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 200,
+        "y": 440,
+        "wires": [
+            [
+                "e3298df2439bf253"
+            ]
+        ]
+    },
+    {
+        "id": "e3298df2439bf253",
+        "type": "postgresql",
+        "z": "303c3e3222f23a18",
+        "name": "insertCategory",
+        "query": "INSERT INTO public.categories\n(category_id, category_name, description)\nVALUES(nextval('category_sequence'),\n'{{ msg.payload.category_name }}', \n'{{ msg.payload.description }}'\n);\n",
+        "postgreSQLConfig": "d6058c3017298c37",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 550,
+        "y": 440,
+        "wires": [
+            [
+                "8011dfb67e9eac9e"
+            ]
+        ]
+    },
+    {
+        "id": "8011dfb67e9eac9e",
+        "type": "change",
+        "z": "303c3e3222f23a18",
+        "name": "Created Success",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"message\":\"Recorded created\"}",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "statusCode",
+                "pt": "msg",
+                "to": "201",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "headers['Accept']",
+                "pt": "msg",
+                "to": "application/json",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "headers['Content-Type']",
+                "pt": "msg",
+                "to": "application/json",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 840,
+        "y": 540,
+        "wires": [
+            [
+                "3e71fe0ec7bde6b0"
+            ]
+        ]
+    },
+    {
+        "id": "03c2abe9acb3a839",
+        "type": "http in",
+        "z": "303c3e3222f23a18",
+        "name": "GET: /cep",
+        "url": "/cep",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 170,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "496b5a1c27f2fda9",
+        "type": "http request",
+        "z": "303c3e3222f23a18",
+        "name": "Consulta CEP",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://viacep.com.br/ws/01001000/xml/",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 840,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9e3d7750de473367",
+        "type": "xml",
+        "z": "303c3e3222f23a18",
+        "name": "xml",
+        "property": "payload",
+        "attr": "< xmlcep>",
+        "chr": "",
+        "x": 1090,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8dc3954b376ccd84",
+        "type": "file in",
+        "z": "303c3e3222f23a18",
+        "name": "Data CSV",
+        "filename": "./static/data.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 470,
+        "y": 760,
+        "wires": [
+            [
+                "27a7ac6e755363a9"
+            ]
+        ]
+    },
+    {
+        "id": "c90ac2f749429b66",
+        "type": "http in",
+        "z": "303c3e3222f23a18",
+        "name": "",
+        "url": "/csv",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 190,
+        "y": 760,
+        "wires": [
+            [
+                "8dc3954b376ccd84"
+            ]
+        ]
+    },
+    {
+        "id": "27a7ac6e755363a9",
+        "type": "csv",
+        "z": "303c3e3222f23a18",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "name,email",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 630,
+        "y": 840,
+        "wires": [
+            [
+                "695ee72cd1ec2415"
+            ]
+        ]
+    },
+    {
+        "id": "2fca5fc06353db51",
+        "type": "http response",
+        "z": "303c3e3222f23a18",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 950,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "695ee72cd1ec2415",
+        "type": "json",
+        "z": "303c3e3222f23a18",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 790,
+        "y": 840,
+        "wires": [
+            [
+                "2fca5fc06353db51"
+            ]
+        ]
+    },
+    {
+        "id": "3780b5eefc0dd37e",
+        "type": "http in",
+        "z": "738ae533db3bed30",
+        "name": "obtentores",
+        "url": "/agritec/v1/obtentores",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 80,
+        "y": 200,
+        "wires": [
+            [
+                "e7cd455870207d69"
+            ]
+        ],
+        "icon": "node-red/arrow-in.svg"
+    },
+    {
+        "id": "d781335c3ac9a190",
+        "type": "http request",
+        "z": "738ae533db3bed30",
+        "name": "get obtentores",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://apigateway-h.cnptia.embrapa.br/agritec/v1/obtentores",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "Content-Type",
+                "valueType": "other",
+                "valueValue": "application/json"
+            }
+        ],
+        "x": 1390,
+        "y": 320,
+        "wires": [
+            [
+                "8c43985463ed3022"
+            ]
+        ]
+    },
+    {
+        "id": "d2a30e27d6aca2e2",
+        "type": "http response",
+        "z": "738ae533db3bed30",
+        "name": "Success Response",
+        "statusCode": "",
+        "headers": {
+            "X-Nasph-Completed": "true"
+        },
+        "x": 2840,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "72e52e3ffae1122d",
+        "type": "http request",
+        "z": "738ae533db3bed30",
+        "name": "Subscription Producer",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "{{{host}}}/billing/register",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1840,
+        "y": 220,
+        "wires": [
+            [
+                "9a272d450fac88ff"
+            ]
+        ]
+    },
+    {
+        "id": "fb19bf67253b37b3",
+        "type": "http request",
+        "z": "738ae533db3bed30",
+        "name": "Check Subscription",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "query",
+        "url": "{{{host}}}/billing/check",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": true,
+        "headers": [],
+        "x": 890,
+        "y": 160,
+        "wires": [
+            [
+                "2f276b0ef2aec15b"
+            ]
+        ]
+    },
+    {
+        "id": "8c43985463ed3022",
+        "type": "function",
+        "z": "738ae533db3bed30",
+        "name": "Payload Return",
+        "func": "var obtentores = msg.payload;\nflow.set(\"obt\", obtentores);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1590,
+        "y": 220,
+        "wires": [
+            [
+                "72e52e3ffae1122d"
+            ]
+        ]
+    },
+    {
+        "id": "890b4aeae1fabecd",
+        "type": "function",
+        "z": "738ae533db3bed30",
+        "name": "Update Payload",
+        "func": "var obtentores = flow.get(\"obt\");\nmsg.payload=obtentores;\nmsg.statusCode=200;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2470,
+        "y": 260,
+        "wires": [
+            [
+                "d2a30e27d6aca2e2"
+            ]
+        ]
+    },
+    {
+        "id": "0e4727f0b06ec928",
+        "type": "catch",
+        "z": "738ae533db3bed30",
+        "name": "Error Handler",
+        "scope": [
+            "fb19bf67253b37b3",
+            "d781335c3ac9a190",
+            "72e52e3ffae1122d"
+        ],
+        "uncaught": false,
+        "x": 90,
+        "y": 400,
+        "wires": [
+            [
+                "493d9447a9235a67"
+            ]
+        ]
+    },
+    {
+        "id": "60cde3833190b2d6",
+        "type": "debug",
+        "z": "738ae533db3bed30",
+        "name": "Debug Payload",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "host",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "e7cd455870207d69",
+        "type": "function",
+        "z": "738ae533db3bed30",
+        "name": "Set Proper Headers",
+        "func": "msg.headers = {};\nmsg.headers['clientid'] = msg.req.headers['clientid']\nmsg.headers['x-requested_nasph_uri'] = msg.req.headers['x-requested_nasph_uri']\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 200,
+        "wires": [
+            [
+                "0c748b50e4a4f73c"
+            ]
+        ]
+    },
+    {
+        "id": "493d9447a9235a67",
+        "type": "http-out-error",
+        "z": "738ae533db3bed30",
+        "name": "HTTP Error",
+        "x": 390,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "2f276b0ef2aec15b",
+        "type": "switch",
+        "z": "738ae533db3bed30",
+        "name": "Check Subscription",
+        "property": "statusCode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "500",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "200",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1150,
+        "y": 160,
+        "wires": [
+            [
+                "b310bea450c616b4"
+            ],
+            [
+                "d781335c3ac9a190"
+            ]
+        ]
+    },
+    {
+        "id": "bb6244b7a52b83f0",
+        "type": "http response",
+        "z": "738ae533db3bed30",
+        "name": "",
+        "statusCode": "500",
+        "headers": {},
+        "x": 2860,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "9a272d450fac88ff",
+        "type": "switch",
+        "z": "738ae533db3bed30",
+        "name": "",
+        "property": "statusCode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "201",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "201",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 2120,
+        "y": 200,
+        "wires": [
+            [
+                "4e99ca7b9cca6d30"
+            ],
+            [
+                "890b4aeae1fabecd"
+            ]
+        ]
+    },
+    {
+        "id": "0c748b50e4a4f73c",
+        "type": "change",
+        "z": "738ae533db3bed30",
+        "name": "Config Host",
+        "rules": [
+            {
+                "t": "set",
+                "p": "host",
+                "pt": "msg",
+                "to": "PRODUCER_HOST",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 200,
+        "wires": [
+            [
+                "fb19bf67253b37b3",
+                "60cde3833190b2d6"
+            ]
+        ]
+    },
+    {
+        "id": "34e12e80d3f6534d",
+        "type": "comment",
+        "z": "738ae533db3bed30",
+        "name": "http://{{host}}:9888/billing/check",
+        "info": "http://{{host}}:9888/billing/check",
+        "x": 790,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "b310bea450c616b4",
+        "type": "function",
+        "z": "738ae533db3bed30",
+        "name": "setHeader",
+        "func": "msg.headers = {};\nmsg.headers['X-Response-Error'] = \"Subscription issue\"\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1390,
+        "y": 40,
+        "wires": [
+            [
+                "bb6244b7a52b83f0"
+            ]
+        ]
+    },
+    {
+        "id": "4e99ca7b9cca6d30",
+        "type": "function",
+        "z": "738ae533db3bed30",
+        "name": "setHeaderPublish",
+        "func": "msg.headers = {};\nmsg.headers['X-Response-Error'] = \"Publishing Event Problem\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2480,
+        "y": 140,
+        "wires": [
+            [
+                "bb6244b7a52b83f0"
+            ]
+        ]
+    }
+]

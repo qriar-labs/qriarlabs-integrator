@@ -1,0 +1,11 @@
+[
+    {
+        "id": "738ae533db3bed30",
+        "type": "tab",
+        "label": "EmptyFlow",
+        "disabled": false,
+        "info": "## Empty Flow\n\nBase for new integrations",
+        "env": []
+    }
+ 
+]

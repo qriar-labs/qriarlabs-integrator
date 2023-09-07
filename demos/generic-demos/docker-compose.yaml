@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+
+  agritec-microgateway:
+    image: skalenatech/noderedpg:latest
+    ports:
+      - "1880:1880"
+    environment:
+      PRODUCER_HOST: billing_producer
