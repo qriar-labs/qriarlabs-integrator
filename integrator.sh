@@ -13,7 +13,7 @@ case $1 in create)
       press any key to continue or ctrl+c to finish the CLI"
       mkdir -p projects/$1
 
-      cp -R demos/clean/** projects/$1
+      cp -R base/clean/** projects/$1
       
       cd projects/$1
 
