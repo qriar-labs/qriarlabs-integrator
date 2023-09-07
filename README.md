@@ -28,3 +28,5 @@ From the root created project, execute the command: ```./runApi.sh```
 Open your Browser and navigate to: http://localhost:1880/
 
 Have sweet Integrations!
+
+![QriarLabs Integration](https://github.com/qriar-labs/qriarlabs-integrator/blob/b20d31da585807412bdbb93b45ea6effc5bbd27c/base/clean/static/screenshot.png?raw=true)
