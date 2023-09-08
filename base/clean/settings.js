@@ -413,7 +413,7 @@
             /** To disable the 'Welcome to Node-RED' tour that is displayed the first
              * time you access the editor for each release of Node-RED, set this to false
              */
-            //tours: false,
+            tours: false,
     
             palette: {
                 hide: ["node-red-dashboard"] // hiding the dashboard nodes
