@@ -10,10 +10,18 @@ Pre-requirements:
 * NodeRed (```npm install node-red -g```)
 * VS Code + Configured Path ( able to execute code . from terminal )
 * Bash Terminal (Linux, MacOS or Windows with Powershell )
+* GIT
+
+## Cloning this Repository 
+
+Execute the following command in your terminal:
+
+```git clone https://github.com/qriar-labs/qriarlabs-integrator```
+
 
 ## CLI: integrator.sh 
 
-In order to create new projects execute the following command: 
+In order to create new projects execute the following command from the recent clonned repo: 
 
 ```./integrator.sh```
 
