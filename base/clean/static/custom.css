@@ -19,7 +19,7 @@ html *
 
 #red-ui-header .red-ui-deploy-button {
 
-background: #b843b9;
+background: #27adda;
 color: var(--red-ui-deploy-button-color);
 
 }
@@ -42,7 +42,7 @@ color: var(--red-ui-deploy-button-color);
 }
 
 #red-ui-header .red-ui-deploy-button {
-    background: #b843b9;
+    background: #27adda;
     color: var(--red-ui-deploy-button-color);
 }
 
@@ -158,7 +158,7 @@ color: var(--red-ui-deploy-button-color);
 --red-ui-diff-state-unchanged-background: #000;
 --red-ui-diff-state-conflicted: purple;
 --red-ui-diff-state-moved: #3f81b3;
---red-ui-diff-state-conflict: #9b45ce;
+--red-ui-diff-state-conflict: #27adda;
 --red-ui-diff-state-conflict-background: #ffdad4;
 --red-ui-diff-state-added-background: #eefee7;
 --red-ui-diff-state-added-border: #c2d5b4;
@@ -168,7 +168,7 @@ color: var(--red-ui-deploy-button-color);
 --red-ui-diff-state-deleted-border: #e0c2c2;
 --red-ui-diff-state-deleted-header-background: #fccfcf;
 --red-ui-diff-state-deleted-header-border: #e9bebe;
---red-ui-diff-merge-header-color: #800080;
+--red-ui-diff-merge-header-color: #27adda;
 --red-ui-diff-merge-header-background: #e5f9ff;
 --red-ui-diff-merge-header-border-color: #b2edff;
 --red-ui-menuBackground: #121212;
@@ -223,9 +223,9 @@ color: var(--red-ui-deploy-button-color);
 --red-ui-deploy-button-color: #eee;
 --red-ui-deploy-button-color-active: #ccc;
 --red-ui-deploy-button-color-disabled: #999;
---red-ui-deploy-button-background: #84108c;
---red-ui-deploy-button-background-hover: #94489a;
---red-ui-deploy-button-background-active: #94489a;
+--red-ui-deploy-button-background: #27adda;
+--red-ui-deploy-button-background-hover: #1daec8;
+--red-ui-deploy-button-background-active: #1daec8;
 --red-ui-deploy-button-background-disabled: #444;
 --red-ui-deploy-button-background-disabled-hover: #555;
 --red-ui-header-background: #000;
@@ -250,7 +250,7 @@ color: var(--red-ui-deploy-button-color);
 --red-ui-debug-message-background-hover: #161616;
 --red-ui-debug-message-text-color: #DEDEDE;
 --red-ui-debug-message-text-color-meta: #f5993d;
---red-ui-debug-message-text-color-object-key: #b83df5;
+--red-ui-debug-message-text-color-object-key: #1daec8;
 --red-ui-debug-message-text-color-msg-type-other: #3d99f5;
 --red-ui-debug-message-text-color-msg-type-string: #f53d3d;
 --red-ui-debug-message-text-color-msg-type-null: #808080;
