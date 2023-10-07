@@ -17,11 +17,11 @@ In order to create new projects execute the following command:
 
 ```./integrator.sh```
 
-Inform the project name. 
+Inform the project name, for example: my-project
 
-The result of command above will create a folder called *the name you choosen* into the projects folder.
+The result of command above will create a folder called *my-project* into the projects folder.
 
-```cd ./projects/<project-name-created> ```
+```cd ./projects/<my-project> ```
 
 ## Executing QriarLabs Integrator
 
