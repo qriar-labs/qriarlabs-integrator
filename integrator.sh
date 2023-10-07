@@ -1,31 +1,30 @@
 #!/bin/bash
 
-case $1 in create)
-    shift
-    if [ "$1" = "" ]; then
+echo QAP Integrator
 
-      echo "Error: A project name must be given after the command 'create'"
-      exit 1
-    else
-      
-      read -p "Creating the project: '${1}', 
-      if the project exist it will be overwritten, 
-      press any key to continue or ctrl+c to finish the CLI"
-      mkdir -p projects/$1
+# Prompt the user for input
+read -p "Please enter a string value: " user_input
 
-      cp -R base/clean/** projects/$1
-      
-      cd projects/$1
-
-      echo "Enter in the following directory: 
-      cd $PWD"
-      code $PWD
-    fi
-    ;;
-  *)
-    echo "Error: Unrecognized command. 
-    Please refer to the documentation for all functionality.
-    The right way should be ./integrator create <PROJECT_NAME>"
+# Check if the input is empty
+if [ -z "$user_input" ]; then
+    echo "Error: No input provided."
     exit 1
-    ;;
-esac
+fi
+
+# Create the directory with the input name
+mkdir projects/"$user_input"
+cp -R base/clean/** projects/"$user_input"
+FILE=projects/"$user_input"/buildAndRunDocker.sh
+sed -i -e "s/@project/$user_input/" $FILE
+rm -rf projects/"$user_input"/buildAndRunDocker.sh-e
+
+cd projects/"$user_input"
+code .
+
+
+# Check if the directory was created successfully
+if [ "$?" -ne 0 ]; then
+    echo "Error: Failed to create the directory."
+    exit 1
+fi
+
