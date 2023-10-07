@@ -17,7 +17,7 @@ In order to create new projects execute the following command:
 
 ```./integrator.sh```
 
-Inform the project name, for example: my-project
+Inform the project name, for example: ```my-project```
 
 The result of command above will create a folder called *my-project* into the projects folder.
 
