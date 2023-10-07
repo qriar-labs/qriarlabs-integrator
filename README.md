@@ -19,7 +19,7 @@ In order to create new projects execute the following command:
 
 Inform the project name, for example: ```my-project```
 
-The result of command above will create a folder called *my-project* into the projects folder.
+The result of command above will create a folder called ```*my-project*``` into the projects folder in the root path of your QAP Integrator path.
 
 ```cd ./projects/<my-project> ```
 
