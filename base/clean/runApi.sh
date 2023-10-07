@@ -1,1 +1,1 @@
-node-red --settings settings.js --safe flows.json
+node-red --settings settings.js --safe

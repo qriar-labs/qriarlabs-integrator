@@ -5,6 +5,18 @@ html *
    font-family: 'JetBrains Mono','IBM Plex Mono', 'Arial Narrow', Arial, sans-serif;
 }
 
+/* Change nodes to square */
+.red-ui-flow-node {
+    rx: 0 !important;
+    ry: 0 !important;
+}
+
+/* If you also want to change the appearance of the nodes when they're being dragged, add the following: */
+.red-ui-flow-node-clone {
+    rx: 0 !important;
+    ry: 0 !important;
+}
+
 #red-ui-header .red-ui-deploy-button {
 
 background: #b843b9;
