@@ -15,11 +15,13 @@ Pre-requirements:
 
 In order to create new projects execute the following command: 
 
-```./integrator.sh create sample ```
+```./integrator.sh```
 
-The result of command above will create a folder called *sample* into the projects folder.
+Inform the project name. 
 
-```cd ./projects/sample ```
+The result of command above will create a folder called *the name you choosen* into the projects folder.
+
+```cd ./projects/<project-name-created> ```
 
 ## Executing QriarLabs Integrator
 
